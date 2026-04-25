@@ -29,5 +29,8 @@ export function getCached(key: string): string | undefined {
 }
 
 export function setCached(key: string, fixed: string): void {
-  cache.set(key, JSON.stringify({ fixed, timestamp: Date.now() } satisfies CacheEntry));
+  cache.set(
+    key,
+    JSON.stringify({ fixed, timestamp: Date.now() } satisfies CacheEntry),
+  );
 }

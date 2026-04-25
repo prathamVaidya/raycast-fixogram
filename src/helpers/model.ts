@@ -24,9 +24,15 @@ export function buildModel(prefs: Preferences) {
 
   switch (prefs.provider) {
     case "anthropic":
-      return createAnthropic({ apiKey: prefs.apiKey, ...(customURL && { baseURL: customURL }) })(modelId);
+      return createAnthropic({
+        apiKey: prefs.apiKey,
+        ...(customURL && { baseURL: customURL }),
+      })(modelId);
     case "google":
-      return createGoogleGenerativeAI({ apiKey: prefs.apiKey, ...(customURL && { baseURL: customURL }) })(modelId);
+      return createGoogleGenerativeAI({
+        apiKey: prefs.apiKey,
+        ...(customURL && { baseURL: customURL }),
+      })(modelId);
     case "openai":
     case "openrouter":
     case "groq":
@@ -36,6 +42,8 @@ export function buildModel(prefs: Preferences) {
       return createOpenAI({ apiKey, ...(baseURL && { baseURL }) })(modelId);
     }
     default:
-      throw new Error(`Unknown provider: "${prefs.provider}". Check your extension preferences.`);
+      throw new Error(
+        `Unknown provider: "${prefs.provider}". Check your extension preferences.`,
+      );
   }
 }
