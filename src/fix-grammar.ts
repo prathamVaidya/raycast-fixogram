@@ -5,7 +5,7 @@ import {
   Toast,
   getPreferenceValues,
 } from "@raycast/api";
-import { generateText } from "ai";
+import { generateText, APICallError, RetryError } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
@@ -49,6 +49,53 @@ const DEFAULT_MODELS: Record<Preferences["provider"], string> = {
   google: "gemini-2.0-flash",
   groq: "llama-3.3-70b-versatile",
 };
+
+function friendlyError(err: unknown): string {
+  if (RetryError.isInstance(err)) {
+    return friendlyError(err.lastError);
+  }
+
+  if (
+    err instanceof TypeError &&
+    /fetch|network|ENOTFOUND|ECONNREFUSED/i.test(err.message)
+  ) {
+    return "Network error — check your internet connection and try again.";
+  }
+
+  if (APICallError.isInstance(err)) {
+    const { statusCode, message } = err;
+
+    if (statusCode === 401)
+      return "Invalid API key — open preferences and check your key.";
+    if (statusCode === 403)
+      return "Access denied — your API key may not have access to this model.";
+    if (statusCode === 404)
+      return `Model not found — "${message.match(/model[: ]+([^\s,]+)/i)?.[1] ?? "unknown"}" doesn't exist for this provider. Check your model ID in preferences.`;
+    if (statusCode === 429) {
+      if (/quota|billing|exceeded/i.test(message)) {
+        return "API quota exceeded — check your plan and billing details.";
+      }
+      return "Rate limit reached — wait a moment and try again.";
+    }
+    if (statusCode === 400) {
+      if (
+        /too long|context.{0,20}window|max.{0,10}token|input.{0,10}length/i.test(
+          message,
+        )
+      ) {
+        return "Text is too long for this model's context window. Try with shorter text.";
+      }
+      return `Bad request: ${message}`;
+    }
+    if (statusCode !== undefined && statusCode >= 500) {
+      return `Provider server error (${statusCode}) — not your fault. Try again in a moment.`;
+    }
+    return message;
+  }
+
+  if (err instanceof Error) return err.message;
+  return String(err);
+}
 
 function buildModel(prefs: Preferences) {
   const modelId = prefs.model?.trim() || DEFAULT_MODELS[prefs.provider];
@@ -116,12 +163,15 @@ export default async function Command() {
       prompt: text,
     });
 
+    if (!fixed?.trim()) {
+      throw new Error("Model returned an empty response. Try again.");
+    }
+
     await Clipboard.paste(fixed);
     toast.hide();
     await showHUD("Grammar fixed & pasted");
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
     toast.style = Toast.Style.Failure;
-    toast.title = message;
+    toast.title = friendlyError(err);
   }
 }
