@@ -11,7 +11,13 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 interface Preferences {
-  provider: "anthropic" | "openai" | "openrouter" | "google" | "groq" | "ollama";
+  provider:
+    | "anthropic"
+    | "openai"
+    | "openrouter"
+    | "google"
+    | "groq"
+    | "ollama";
   apiKey: string;
   model?: string;
   customBaseURL?: string;
@@ -33,6 +39,7 @@ const LOADING_MESSAGES = [
   "Fixing what autocorrect destroyed…",
   "Polishing your prose…",
   "Teaching your text some manners…",
+  "Saving you from grammar police…",
 ];
 
 function randomLoadingMessage() {
@@ -136,7 +143,8 @@ function buildModel(prefs: Preferences) {
       return client(modelId);
     }
     case "ollama": {
-      const baseURL = prefs.customBaseURL?.trim() || "http://localhost:11434/v1";
+      const baseURL =
+        prefs.customBaseURL?.trim() || "http://localhost:11434/v1";
       const client = createOpenAI({ apiKey: "ollama", baseURL });
       return client(modelId);
     }
