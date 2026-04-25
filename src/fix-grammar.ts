@@ -169,11 +169,12 @@ function buildModel(prefs: Preferences) {
 export default async function Command() {
   const prefs = getPreferenceValues<Preferences>();
 
-  const text = await Clipboard.readText();
-  if (!text?.trim()) {
-    await showHUD("No text in clipboard");
+  const content = await Clipboard.read();
+  if (content.file || !content.text?.trim()) {
+    await showHUD(content.file ? "Clipboard contains a file or image, not text" : "No text in clipboard");
     return;
   }
+  const text = content.text;
 
   const toast = await showToast({
     style: Toast.Style.Animated,
