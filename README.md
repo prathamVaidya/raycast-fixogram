@@ -1,3 +1,5 @@
+<img src="extension-icon.png" width="64" height="64" alt="Fixogram" />
+
 # Fixogram
 
 Fixing grammar in every message you send should not require you to switch to ChatGPT or Claude. Drop the message "Fix it, bla bla," and then wait for the response to copy back. Copy the message and just do CMD+Shift+V to paste the fixed grammar.
