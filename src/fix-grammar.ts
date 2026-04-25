@@ -1,5 +1,6 @@
 import {
   AI,
+  Cache,
   Clipboard,
   environment,
   showHUD,
@@ -25,6 +26,38 @@ interface Preferences {
   model?: string;
   userInstruction?: string;
   customBaseURL?: string;
+}
+
+const cache = new Cache();
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+interface CacheEntry {
+  fixed: string;
+  timestamp: number;
+}
+
+function hashKey(text: string, systemPrompt: string): string {
+  const raw = `${systemPrompt}::${text}`;
+  let h = 5381;
+  for (let i = 0; i < raw.length; i++) {
+    h = ((h << 5) + h + raw.charCodeAt(i)) & 0xffffffff;
+  }
+  return (h >>> 0).toString(36);
+}
+
+function getCached(text: string, systemPrompt: string): string | undefined {
+  const raw = cache.get(hashKey(text, systemPrompt));
+  if (!raw) return undefined;
+  const entry: CacheEntry = JSON.parse(raw);
+  if (Date.now() - entry.timestamp > CACHE_TTL_MS) {
+    cache.remove(hashKey(text, systemPrompt));
+    return undefined;
+  }
+  return entry.fixed;
+}
+
+function setCached(text: string, systemPrompt: string, fixed: string): void {
+  cache.set(hashKey(text, systemPrompt), JSON.stringify({ fixed, timestamp: Date.now() }));
 }
 
 const LOADING_MESSAGES = [
@@ -180,6 +213,14 @@ export default async function Command() {
   }
   const text = content.text;
 
+  const systemPrompt = buildSystemPrompt(prefs.userInstruction);
+  const cached = getCached(text, systemPrompt);
+  if (cached) {
+    await Clipboard.paste(cached);
+    await showHUD("Grammar fixed & pasted (cached)");
+    return;
+  }
+
   const toast = await showToast({
     style: Toast.Style.Animated,
     title: randomLoadingMessage(),
@@ -190,14 +231,14 @@ export default async function Command() {
 
     if (prefs.useRaycastAI && environment.canAccess(AI)) {
       fixed = await AI.ask(
-        `${buildSystemPrompt(prefs.userInstruction)}\n\nText to fix:\n${text}`,
+        `${systemPrompt}\n\nText to fix:\n${text}`,
         { creativity: "none", model: DEFAULT_MODEL_FOR_RAYCAST_AI },
       );
     } else {
       const model = buildModel(prefs);
       const result = await generateText({
         model,
-        system: buildSystemPrompt(prefs.userInstruction),
+        system: systemPrompt,
         prompt: text,
       });
       fixed = result.text;
@@ -207,8 +248,10 @@ export default async function Command() {
       throw new Error("Model returned an empty response. Try again.");
     }
 
+    setCached(text, systemPrompt, fixed);
     await Clipboard.paste(fixed);
     toast.hide();
+    await showHUD("Grammar fixed & pasted");
   } catch (err) {
     toast.style = Toast.Style.Failure;
     toast.title = friendlyError(err);
