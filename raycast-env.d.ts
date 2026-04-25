@@ -10,7 +10,7 @@
 type ExtensionPreferences = {
   /** LLM Provider - The AI provider to use for grammar correction */
   "provider": "anthropic" | "openai" | "openrouter" | "google" | "groq" | "ollama",
-  /** API Key - Your API key for the selected provider. Not required for Ollama — enter any value. */
+  /** API Key - Your API key for the selected provider. If you have Raycast Pro then this is ignored — enter any value as a placeholder. */
   "apiKey": string,
   /** Model - Model ID to use (e.g. claude-sonnet-4-20250514, gpt-4o, gemini-2.0-flash) */
   "model"?: string,
