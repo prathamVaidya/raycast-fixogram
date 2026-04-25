@@ -11,7 +11,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 interface Preferences {
-  provider: "anthropic" | "openai" | "openrouter" | "google" | "groq";
+  provider: "anthropic" | "openai" | "openrouter" | "google" | "groq" | "ollama";
   apiKey: string;
   model?: string;
   customBaseURL?: string;
@@ -48,6 +48,7 @@ const DEFAULT_MODELS: Record<Preferences["provider"], string> = {
   openrouter: "openai/gpt-4o",
   google: "gemini-2.0-flash",
   groq: "llama-3.3-70b-versatile",
+  ollama: "llama3.2",
 };
 
 function friendlyError(err: unknown): string {
@@ -132,6 +133,11 @@ function buildModel(prefs: Preferences) {
       const baseURL =
         prefs.customBaseURL?.trim() || "https://api.groq.com/openai/v1";
       const client = createOpenAI({ apiKey: prefs.apiKey, baseURL });
+      return client(modelId);
+    }
+    case "ollama": {
+      const baseURL = prefs.customBaseURL?.trim() || "http://localhost:11434/v1";
+      const client = createOpenAI({ apiKey: "ollama", baseURL });
       return client(modelId);
     }
     default:

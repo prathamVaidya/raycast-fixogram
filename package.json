@@ -26,13 +26,14 @@
             { "title": "OpenAI", "value": "openai" },
             { "title": "OpenRouter", "value": "openrouter" },
             { "title": "Google (Gemini)", "value": "google" },
-            { "title": "Groq", "value": "groq" }
+            { "title": "Groq", "value": "groq" },
+            { "title": "Ollama (local)", "value": "ollama" }
           ]
         },
         {
           "name": "apiKey",
           "title": "API Key",
-          "description": "Your API key for the selected provider",
+          "description": "Your API key for the selected provider. Not required for Ollama — enter any value.",
           "type": "password",
           "required": true
         },
