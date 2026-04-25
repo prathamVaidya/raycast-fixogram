@@ -9,32 +9,29 @@
 
 type ExtensionPreferences = {
   /** LLM Provider - The AI provider to use for grammar correction */
-  provider:
-    | "anthropic"
-    | "openai"
-    | "openrouter"
-    | "google"
-    | "groq"
-    | "ollama";
+  "provider": "anthropic" | "openai" | "openrouter" | "google" | "groq" | "ollama",
   /** API Key - Your API key for the selected provider. Not required for Ollama — enter any value. */
-  apiKey: string;
+  "apiKey": string,
   /** Model - Model ID to use (e.g. claude-sonnet-4-20250514, gpt-4o, gemini-2.0-flash) */
-  model?: string;
+  "model"?: string,
+  /** Use Raycast AI - When enabled, uses Raycast's built-in AI instead of your API key if you have Raycast Pro. */
+  "useRaycastAI": boolean,
   /** Extra Instructions - Optional instructions appended to the system prompt (e.g. "Use British English" or "Keep it formal") */
-  userInstruction?: string;
+  "userInstruction"?: string,
   /** Custom Base URL - Optional base URL override (useful for OpenRouter or self-hosted endpoints) */
-  customBaseURL?: string;
-};
+  "customBaseURL"?: string
+}
 
 /** Preferences accessible in all the extension's commands */
-declare type Preferences = ExtensionPreferences;
+declare type Preferences = ExtensionPreferences
 
 declare namespace Preferences {
   /** Preferences accessible in the `fix-grammar` command */
-  export type FixGrammar = ExtensionPreferences & {};
+  export type FixGrammar = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
   /** Arguments passed to the `fix-grammar` command */
-  export type FixGrammar = {};
+  export type FixGrammar = {}
 }
+

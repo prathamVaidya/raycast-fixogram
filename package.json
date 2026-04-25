@@ -60,6 +60,15 @@
       "placeholder": "claude-sonnet-4-20250514"
     },
     {
+      "name": "useRaycastAI",
+      "title": "Use Raycast AI",
+      "label": "Use Raycast AI if available (Raycast Pro)",
+      "description": "When enabled, uses Raycast's built-in AI instead of your API key if you have Raycast Pro.",
+      "type": "checkbox",
+      "required": false,
+      "default": true
+    },
+    {
       "name": "userInstruction",
       "title": "Extra Instructions",
       "description": "Optional instructions appended to the system prompt (e.g. \"Use British English\" or \"Keep it formal\")",

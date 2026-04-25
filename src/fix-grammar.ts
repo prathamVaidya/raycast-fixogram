@@ -1,5 +1,7 @@
 import {
+  AI,
   Clipboard,
+  environment,
   showHUD,
   showToast,
   Toast,
@@ -19,6 +21,7 @@ interface Preferences {
     | "groq"
     | "ollama";
   apiKey: string;
+  useRaycastAI: boolean;
   model?: string;
   userInstruction?: string;
   customBaseURL?: string;
@@ -54,6 +57,8 @@ function buildSystemPrompt(userInstruction?: string): string {
   if (!userInstruction?.trim()) return BASE_SYSTEM_PROMPT;
   return `${BASE_SYSTEM_PROMPT}\n\nAdditional instructions: ${userInstruction.trim()}`;
 }
+
+const DEFAULT_MODEL_FOR_RAYCAST_AI = AI.Model["OpenAI_GPT-4.1_nano"];
 
 const DEFAULT_MODELS: Record<Preferences["provider"], string> = {
   anthropic: "claude-haiku-4-5-20251001",
@@ -176,12 +181,22 @@ export default async function Command() {
   });
 
   try {
-    const model = buildModel(prefs);
-    const { text: fixed } = await generateText({
-      model,
-      system: buildSystemPrompt(prefs.userInstruction),
-      prompt: text,
-    });
+    let fixed: string;
+
+    if (prefs.useRaycastAI && environment.canAccess(AI)) {
+      fixed = await AI.ask(
+        `${buildSystemPrompt(prefs.userInstruction)}\n\nText to fix:\n${text}`,
+        { creativity: "none", model: DEFAULT_MODEL_FOR_RAYCAST_AI },
+      );
+    } else {
+      const model = buildModel(prefs);
+      const result = await generateText({
+        model,
+        system: buildSystemPrompt(prefs.userInstruction),
+        prompt: text,
+      });
+      fixed = result.text;
+    }
 
     if (!fixed?.trim()) {
       throw new Error("Model returned an empty response. Try again.");
