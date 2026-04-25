@@ -1,6 +1,6 @@
 # Fixogram
 
-Fix grammar, spelling, and punctuation of any text instantly — copy, trigger, paste. Powered by your choice of AI provider.
+Fixing grammar in every message you send should not require you to switch to ChatGPT or Claude. Drop the message "Fix it, bla bla," and then wait for the response to copy back. Copy the message and just do CMD+Shift+V to paste the fixed grammar.
 
 ## How It Works
 
