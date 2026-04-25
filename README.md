@@ -1,4 +1,4 @@
-<img src="extension-icon.png" width="64" height="64" alt="Fixogram" />
+<img src="assets/extension-icon.png" width="64" height="64" alt="Fixogram" />
 
 # Fixogram
 
