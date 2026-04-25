@@ -9,80 +9,79 @@
     "Productivity"
   ],
   "license": "MIT",
+  "preferences": [
+    {
+      "name": "provider",
+      "title": "LLM Provider",
+      "description": "The AI provider to use for grammar correction",
+      "type": "dropdown",
+      "required": true,
+      "default": "anthropic",
+      "data": [
+        {
+          "title": "Anthropic (Claude)",
+          "value": "anthropic"
+        },
+        {
+          "title": "OpenAI",
+          "value": "openai"
+        },
+        {
+          "title": "OpenRouter",
+          "value": "openrouter"
+        },
+        {
+          "title": "Google (Gemini)",
+          "value": "google"
+        },
+        {
+          "title": "Groq",
+          "value": "groq"
+        },
+        {
+          "title": "Ollama (local)",
+          "value": "ollama"
+        }
+      ]
+    },
+    {
+      "name": "apiKey",
+      "title": "API Key",
+      "description": "Your API key for the selected provider. Not required for Ollama — enter any value.",
+      "type": "password",
+      "required": true
+    },
+    {
+      "name": "model",
+      "title": "Model",
+      "description": "Model ID to use (e.g. claude-sonnet-4-20250514, gpt-4o, gemini-2.0-flash)",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "claude-sonnet-4-20250514"
+    },
+    {
+      "name": "userInstruction",
+      "title": "Extra Instructions",
+      "description": "Optional instructions appended to the system prompt (e.g. \"Use British English\" or \"Keep it formal\")",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "e.g. Don't use em dashes. Use British English."
+    },
+    {
+      "name": "customBaseURL",
+      "title": "Custom Base URL",
+      "description": "Optional base URL override (useful for OpenRouter or self-hosted endpoints)",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "https://openrouter.ai/api/v1"
+    }
+  ],
   "commands": [
     {
       "name": "fix-grammar",
       "title": "Fix Grammar & Paste",
       "description": "Reads clipboard text, fixes grammar with an LLM, and pastes it",
-      "mode": "no-view",
-      "preferences": [
-        {
-          "name": "provider",
-          "title": "LLM Provider",
-          "description": "The AI provider to use for grammar correction",
-          "type": "dropdown",
-          "required": true,
-          "default": "anthropic",
-          "data": [
-            {
-              "title": "Anthropic (Claude)",
-              "value": "anthropic"
-            },
-            {
-              "title": "OpenAI",
-              "value": "openai"
-            },
-            {
-              "title": "OpenRouter",
-              "value": "openrouter"
-            },
-            {
-              "title": "Google (Gemini)",
-              "value": "google"
-            },
-            {
-              "title": "Groq",
-              "value": "groq"
-            },
-            {
-              "title": "Ollama (local)",
-              "value": "ollama"
-            }
-          ]
-        },
-        {
-          "name": "apiKey",
-          "title": "API Key",
-          "description": "Your API key for the selected provider. Not required for Ollama — enter any value.",
-          "type": "password",
-          "required": true
-        },
-        {
-          "name": "model",
-          "title": "Model",
-          "description": "Model ID to use (e.g. claude-sonnet-4-20250514, gpt-4o, gemini-2.0-flash)",
-          "type": "textfield",
-          "required": false,
-          "default": "claude-sonnet-4-20250514",
-          "placeholder": "claude-sonnet-4-20250514"
-        },
-        {
-          "name": "userInstruction",
-          "title": "Extra Instructions",
-          "description": "Optional instructions appended to the system prompt (e.g. \"Use British English\" or \"Keep it formal\")",
-          "type": "textfield",
-          "required": false,
-          "placeholder": "e.g. Don't use em dashes. Use British English."
-        },
-        {
-          "name": "customBaseURL",
-          "title": "Custom Base URL",
-          "description": "Optional base URL override (useful for OpenRouter or self-hosted endpoints)",
-          "type": "textfield",
-          "required": false,
-          "placeholder": "https://openrouter.ai/api/v1"
-        }
-      ]
+      "mode": "no-view"
     }
   ],
   "dependencies": {
