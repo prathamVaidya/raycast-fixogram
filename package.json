@@ -5,7 +5,9 @@
   "description": "Fix grammar, spelling, and punctuation of clipboard text using an LLM",
   "icon": "extension-icon.png",
   "author": "prathamvaidya",
-  "categories": ["Productivity"],
+  "categories": [
+    "Productivity"
+  ],
   "license": "MIT",
   "commands": [
     {
@@ -22,12 +24,30 @@
           "required": true,
           "default": "anthropic",
           "data": [
-            { "title": "Anthropic (Claude)", "value": "anthropic" },
-            { "title": "OpenAI", "value": "openai" },
-            { "title": "OpenRouter", "value": "openrouter" },
-            { "title": "Google (Gemini)", "value": "google" },
-            { "title": "Groq", "value": "groq" },
-            { "title": "Ollama (local)", "value": "ollama" }
+            {
+              "title": "Anthropic (Claude)",
+              "value": "anthropic"
+            },
+            {
+              "title": "OpenAI",
+              "value": "openai"
+            },
+            {
+              "title": "OpenRouter",
+              "value": "openrouter"
+            },
+            {
+              "title": "Google (Gemini)",
+              "value": "google"
+            },
+            {
+              "title": "Groq",
+              "value": "groq"
+            },
+            {
+              "title": "Ollama (local)",
+              "value": "ollama"
+            }
           ]
         },
         {
@@ -45,6 +65,14 @@
           "required": false,
           "default": "claude-sonnet-4-20250514",
           "placeholder": "claude-sonnet-4-20250514"
+        },
+        {
+          "name": "userInstruction",
+          "title": "Extra Instructions",
+          "description": "Optional instructions appended to the system prompt (e.g. \"Use British English\" or \"Keep it formal\")",
+          "type": "textfield",
+          "required": false,
+          "placeholder": "e.g. Don't use em dashes. Use British English."
         },
         {
           "name": "customBaseURL",

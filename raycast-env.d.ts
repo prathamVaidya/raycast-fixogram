@@ -21,6 +21,8 @@ declare namespace Preferences {
   "apiKey": string,
   /** Model - Model ID to use (e.g. claude-sonnet-4-20250514, gpt-4o, gemini-2.0-flash) */
   "model": string,
+  /** Extra Instructions - Optional instructions appended to the system prompt (e.g. "Use British English" or "Keep it formal") */
+  "userInstruction"?: string,
   /** Custom Base URL - Optional base URL override (useful for OpenRouter or self-hosted endpoints) */
   "customBaseURL"?: string
 }

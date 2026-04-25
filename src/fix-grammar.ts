@@ -20,6 +20,7 @@ interface Preferences {
     | "ollama";
   apiKey: string;
   model?: string;
+  userInstruction?: string;
   customBaseURL?: string;
 }
 
@@ -46,14 +47,19 @@ function randomLoadingMessage() {
   return LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
 }
 
-const SYSTEM_PROMPT =
+const BASE_SYSTEM_PROMPT =
   "Fix grammar, spelling, and punctuation. Return only the corrected text. Do not explain changes. Preserve the original tone and meaning.";
 
+function buildSystemPrompt(userInstruction?: string): string {
+  if (!userInstruction?.trim()) return BASE_SYSTEM_PROMPT;
+  return `${BASE_SYSTEM_PROMPT}\n\nAdditional instructions: ${userInstruction.trim()}`;
+}
+
 const DEFAULT_MODELS: Record<Preferences["provider"], string> = {
-  anthropic: "claude-sonnet-4-20250514",
-  openai: "gpt-4o",
-  openrouter: "openai/gpt-4o",
-  google: "gemini-2.0-flash",
+  anthropic: "claude-haiku-4-5-20251001",
+  openai: "gpt-4.1-nano",
+  openrouter: "openai/gpt-4.1-nano",
+  google: "gemini-2.5-flash-lite",
   groq: "llama-3.3-70b-versatile",
   ollama: "llama3.2",
 };
@@ -173,7 +179,7 @@ export default async function Command() {
     const model = buildModel(prefs);
     const { text: fixed } = await generateText({
       model,
-      system: SYSTEM_PROMPT,
+      system: buildSystemPrompt(prefs.userInstruction),
       prompt: text,
     });
 
