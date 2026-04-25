@@ -171,7 +171,11 @@ export default async function Command() {
 
   const content = await Clipboard.read();
   if (content.file || !content.text?.trim()) {
-    await showHUD(content.file ? "Clipboard contains a file or image, not text" : "No text in clipboard");
+    await showHUD(
+      content.file
+        ? "Clipboard contains a file or image, not text"
+        : "No text in clipboard",
+    );
     return;
   }
   const text = content.text;
@@ -205,7 +209,6 @@ export default async function Command() {
 
     await Clipboard.paste(fixed);
     toast.hide();
-    await showHUD("Grammar fixed & pasted");
   } catch (err) {
     toast.style = Toast.Style.Failure;
     toast.title = friendlyError(err);
