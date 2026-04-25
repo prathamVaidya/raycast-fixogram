@@ -5,8 +5,18 @@ Fix grammar, spelling, and punctuation of any text instantly — copy, trigger, 
 ## How It Works
 
 1. Copy any text to your clipboard
-2. Trigger **Fixogram** (default: `Cmd+Shift+V`)
+2. Trigger **Fixogram** with your assigned hotkey
 3. The corrected text is pasted directly into your frontmost app
+
+## Recommended Hotkey Setup
+
+Raycast doesn't assign hotkeys automatically, so set it up once:
+
+1. Open Raycast and search **"Fix Grammar & Paste"**
+2. Hover the command → click `...` → **Add Hotkey**
+3. Press `Cmd+Shift+V`
+
+After that, `Cmd+Shift+V` works system-wide from any app.
 
 No UI. No interruptions. Just fixed text.
 
