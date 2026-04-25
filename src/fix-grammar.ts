@@ -87,6 +87,10 @@ function buildModel(prefs: Preferences) {
       const client = createOpenAI({ apiKey: prefs.apiKey, baseURL });
       return client(modelId);
     }
+    default:
+      throw new Error(
+        `Unknown provider: "${prefs.provider}". Check your extension preferences.`,
+      );
   }
 }
 
@@ -118,7 +122,6 @@ export default async function Command() {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     toast.style = Toast.Style.Failure;
-    toast.title = "Error";
-    toast.message = message;
+    toast.title = message;
   }
 }
