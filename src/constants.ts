@@ -3,7 +3,6 @@ export const BASE_SYSTEM_PROMPT =
 
 export const LOADING_MESSAGES = [
   "Fixing grammar…",
-  "Pika Pika Chu…",
   "Untangling your sentences…",
   "Making you sound smarter…",
   "Consulting the grammar gods…",
