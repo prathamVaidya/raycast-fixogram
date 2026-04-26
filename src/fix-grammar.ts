@@ -3,6 +3,7 @@ import {
   Clipboard,
   environment,
   getPreferenceValues,
+  getSelectedText,
   showHUD,
   showToast,
   Toast,
@@ -21,27 +22,28 @@ function buildSystemPrompt(userInstruction?: string): string {
 const randomLoadingMessage = () =>
   LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
 
-// ------- Main Command Function
 export default async function Command() {
   const prefs = getPreferenceValues<Preferences>();
 
-  const content = await Clipboard.read();
-  if (content.file || !content.text?.trim()) {
-    await showHUD(
-      content.file
-        ? "Clipboard contains a file or image, not text"
-        : "No text in clipboard",
-    );
+  let text: string;
+  try {
+    text = await getSelectedText();
+  } catch {
+    await showHUD("No text selected — select some text and try again");
     return;
   }
 
-  const text = content.text;
+  if (!text.trim()) {
+    await showHUD("Selected text is empty");
+    return;
+  }
   const systemPrompt = buildSystemPrompt(prefs.userInstruction);
   const key = cacheKey(text, systemPrompt);
   const cached = getCached(key);
 
   if (cached) {
     await Clipboard.paste(cached);
+    await showHUD("Grammar fixed (cached)");
     return;
   }
 
@@ -73,6 +75,7 @@ export default async function Command() {
     setCached(key, fixed);
     await Clipboard.paste(fixed);
     toast.hide();
+    await showHUD("Grammar fixed");
   } catch (err) {
     toast.style = Toast.Style.Failure;
     toast.title = formatError(err);

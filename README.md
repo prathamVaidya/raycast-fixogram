@@ -2,25 +2,25 @@
 
 # Fixogram
 
-Fixing grammar in every message you send should not require you to switch to ChatGPT or Claude. Drop the message "Fix it, bla bla," and then wait for the response to copy back. Copy the message and just do CMD+Shift+V to paste the fixed grammar.
+Fixing grammar in every message you send should not require switching to ChatGPT or Claude. Just select the text, hit `Cmd+Shift+G`, and it's fixed in place — no copy, no paste, no context switch.
 
 ## How It Works
 
-1. Copy any text to your clipboard
-2. Trigger **Fixogram** with your assigned hotkey
-3. The corrected text is pasted directly into your frontmost app
+1. Select any text in any app
+2. Trigger **Fixogram** with your hotkey (`Cmd+Shift+G` recommended)
+3. The selected text is replaced with the corrected version instantly
+
+No UI. No interruptions. Just fixed text.
 
 ## Recommended Hotkey Setup
 
 Raycast doesn't assign hotkeys automatically, so set it up once:
 
-1. Open Raycast and search **"Fix Grammar & Paste"**
+1. Open Raycast and search **"Fix Grammar"**
 2. Hover the command → click `...` → **Add Hotkey**
-3. Press `Cmd+Shift+V`
+3. Press `Cmd+Shift+G`
 
-After that, `Cmd+Shift+V` works system-wide from any app.
-
-No UI. No interruptions. Just fixed text.
+After that, `Cmd+Shift+G` works system-wide from any app.
 
 ## Setup
 
