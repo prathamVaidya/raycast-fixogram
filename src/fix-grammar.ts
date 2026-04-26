@@ -43,7 +43,6 @@ export default async function Command() {
 
   if (cached) {
     await Clipboard.paste(cached);
-    await showHUD("Grammar fixed (cached)");
     return;
   }
 
@@ -75,7 +74,6 @@ export default async function Command() {
     setCached(key, fixed);
     await Clipboard.paste(fixed);
     toast.hide();
-    await showHUD("Grammar fixed");
   } catch (err) {
     toast.style = Toast.Style.Failure;
     toast.title = formatError(err);
