@@ -12,7 +12,6 @@ import { BASE_SYSTEM_PROMPT, LOADING_MESSAGES } from "./constants";
 import { cacheKey, getCached, setCached } from "./helpers/cache";
 import { formatError } from "./helpers/errors";
 import { buildModel } from "./helpers/model";
-import type { Preferences } from "./types";
 
 function buildSystemPrompt(userInstruction?: string): string {
   if (!userInstruction?.trim()) return BASE_SYSTEM_PROMPT;

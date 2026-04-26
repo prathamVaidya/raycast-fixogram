@@ -9,12 +9,7 @@ interface CacheEntry {
 }
 
 export function cacheKey(text: string, systemPrompt: string): string {
-  const raw = `${systemPrompt}::${text}`;
-  let h = 5381;
-  for (let i = 0; i < raw.length; i++) {
-    h = ((h << 5) + h + raw.charCodeAt(i)) & 0xffffffff;
-  }
-  return (h >>> 0).toString(36);
+  return `${systemPrompt}::${text}`;
 }
 
 export function getCached(key: string): string | undefined {

@@ -1,7 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import type { Preferences, Provider } from "../types";
+import type { Provider } from "../types";
 
 export const DEFAULT_MODELS: Record<Provider, string> = {
   anthropic: "claude-haiku-4-5-20251001",
