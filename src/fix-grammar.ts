@@ -72,6 +72,13 @@ export default async function Command() {
       throw new Error("Model returned an empty response. Try again.");
 
     setCached(key, fixed);
+
+    if (fixed.trim() === text.trim()) {
+      toast.style = Toast.Style.Success;
+      toast.title = "Looks good — no changes needed";
+      return;
+    }
+
     await Clipboard.paste(fixed);
     toast.hide();
   } catch (err) {
