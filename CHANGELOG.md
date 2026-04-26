@@ -1,9 +1,9 @@
-# Fixogram Changelog
+# Grammar Fixer Changelog
 
 ## [Initial Release] - {PR_MERGE_DATE}
 
 ### Added
-- Fix grammar, spelling, and punctuation of selected text in-place via a single hotkey (`Cmd+Shift+G` recommended)
+- Fix grammar, spelling, and punctuation of selected text in-place via a single hotkey (`Cmd+Shift+G` on macOS, `Ctrl+Shift+G` on Windows)
 - Support for Anthropic, OpenAI, OpenRouter, Google, Groq, and Ollama providers
 - Raycast Pro support via `AI.ask()` — no API key needed
 - Custom model override via preferences

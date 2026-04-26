@@ -1,13 +1,13 @@
-<img src="assets/extension-icon.png" width="64" height="64" alt="Fixogram" />
+<img src="assets/extension-icon.png" width="64" height="64" alt="Grammar Fixer" />
 
-# Fixogram
+# Grammar Fixer
 
-Fixing grammar in every message you send should not require switching to ChatGPT or Claude. Just select the text, hit `Cmd+Shift+G`, and it's fixed in place — no copy, no paste, no context switch.
+Fixing grammar in every message you send should not require switching to ChatGPT or Claude. Just select the text, hit `Cmd+Shift+G` (or `Ctrl+Shift+G` on Windows), and it's fixed in place — no copy, no paste, no context switch.
 
 ## How It Works
 
 1. Select any text in any app
-2. Trigger **Fixogram** with your hotkey (`Cmd+Shift+G` recommended)
+2. Trigger **Grammar Fixer** with your hotkey
 3. The selected text is replaced with the corrected version instantly
 
 No UI. No interruptions. Just fixed text.
@@ -18,13 +18,13 @@ Raycast doesn't assign hotkeys automatically, so set it up once:
 
 1. Open Raycast and search **"Fix Grammar"**
 2. Hover the command → click `...` → **Add Hotkey**
-3. Press `Cmd+Shift+G`
+3. Press `Cmd+Shift+G` (macOS) or `Ctrl+Shift+G` (Windows)
 
-After that, `Cmd+Shift+G` works system-wide from any app.
+After that, the hotkey works system-wide from any app.
 
 ## Setup
 
-Open Raycast preferences for Fixogram and configure:
+Open Raycast preferences for Grammar Fixer and configure:
 
 | Preference | Description |
 |---|---|
